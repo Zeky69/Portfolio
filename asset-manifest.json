@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.0208966e.css",
-    "main.js": "/static/js/main.a974330a.js",
+    "main.css": "/static/css/main.dae9b772.css",
+    "main.js": "/static/js/main.ea4705ee.js",
     "static/media/zekeriya_ia.png": "/static/media/zekeriya_ia.06be0d627adc6f787158.png",
     "static/media/fl.MOV": "/static/media/fl.43db42f4329d06c4573f.MOV",
     "static/media/fa-solid-900.svg": "/static/media/fa-solid-900.33f11e8e33e406b0dc21.svg",
@@ -55,11 +55,11 @@
     "static/media/logo-femto.png": "/static/media/logo-femto.015174d5b2b32ae07a8a.png",
     "static/media/buld.jpg": "/static/media/buld.55444b9789a64f32e2e5.jpg",
     "index.html": "/index.html",
-    "main.0208966e.css.map": "/static/css/main.0208966e.css.map",
-    "main.a974330a.js.map": "/static/js/main.a974330a.js.map"
+    "main.dae9b772.css.map": "/static/css/main.dae9b772.css.map",
+    "main.ea4705ee.js.map": "/static/js/main.ea4705ee.js.map"
   },
   "entrypoints": [
-    "static/css/main.0208966e.css",
-    "static/js/main.a974330a.js"
+    "static/css/main.dae9b772.css",
+    "static/js/main.ea4705ee.js"
   ]
 }

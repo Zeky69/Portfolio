@@ -2,7 +2,7 @@
   "private": true,
   "name": "portfolio",
   "version": "1.2.0",
-  "homepage": "https://porfolio.codeky.fr",
+  "homepage": "https://portfolio.codeky.fr",
   "scripts": {
     "build": "react-scripts build",
     "predeploy": "npm run build",

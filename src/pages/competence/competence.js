@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "../../components/header/Header";
 import Footer from "../../components/footer/Footer";
-import ExperienceAccordion from "../../containers/competenceAccordion/ExperienceAccordion.js";
+import CompetenceAccordion from "../../containers/competenceAccordion/CompetenceAccordion.js";
 import "./competence.css";
 import { compentences, compentencesHeader } from "../../portfolio.js";
 import { Fade } from "react-reveal";
@@ -45,7 +45,7 @@ function Experience(props) {
           artificielle.
         </p>
       </div>
-      <ExperienceAccordion sections={compentences["sections"]} theme={theme} />
+      <CompetenceAccordion sections={compentences["sections"]} theme={theme} />
       <Footer theme={props.theme} onToggle={props.onToggle} />
     </div>
   );

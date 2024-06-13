@@ -1,5 +1,5 @@
 import React from "react";
-import "./ExperienceAccordion.css";
+import "./CompetenceAccordion.css";
 import { Accordion, Panel } from "baseui/accordion";
 import { DarkTheme, LightTheme, ThemeProvider } from "baseui";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
@@ -67,7 +67,7 @@ function renderElement(element) {
       return null;
   }
 }
-function ExperienceAccordion(props) {
+function CompetenceAccordion(props) {
   const theme = props.theme;
 
   return (
@@ -92,4 +92,4 @@ function ExperienceAccordion(props) {
   );
 }
 
-export default ExperienceAccordion;
+export default CompetenceAccordion;

@@ -485,7 +485,7 @@ const projects = {
     },
     {
       name: "Site présentant Fortiche",
-      url: "",
+      url: "https://github.com/projectsae/sae-1-05-06",
       description:
         "Développement d'un site internet pour présenter l'entreprise Fortiche.",
       languages: [
@@ -505,7 +505,7 @@ const projects = {
     },
     {
       name: "StuckWin",
-      url: "",
+      url: "https://github.com/Zeky69/StuckWin",
       description:
         "Développement d'un jeu de plateau en Java et StdDraw appelé 'StuckWin' jouable contre des IA .",
       languages: [
@@ -566,7 +566,7 @@ const projects = {
     },
     {
       name: "Pimpon GameJAM 2023",
-      url: "",
+      url: "https://github.com/Graspou/Pimpon",
       description:
         "Développement d'un jeu ou des pompiers traquent un pyromane caché parmi eux, similaire à Among Us.",
       languages: [
@@ -591,7 +591,7 @@ const projects = {
     },
     {
       name: "Quoridor",
-      url: "",
+      url: "https://github.com/Zeky69/Quoridor",
       description:
         "Création du jeu de plateau Quoridor avec une IA, en Java et JavaFx.",
       languages: [
@@ -603,7 +603,7 @@ const projects = {
     },
     {
       name: "Démineur",
-      url: "",
+      url: "https://github.com/Zeky69/Demineur",
       description: "Création d'un jeu de Démineur en C++ en QT5",
       languages: [
         {

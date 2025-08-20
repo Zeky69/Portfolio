@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.dae9b772.css",
-    "main.js": "/static/js/main.0212b657.js",
+    "main.css": "/static/css/main.4966cad4.css",
+    "main.js": "/static/js/main.16de370d.js",
     "static/media/zekeriya_ia.png": "/static/media/zekeriya_ia.06be0d627adc6f787158.png",
     "static/media/fl.MOV": "/static/media/fl.43db42f4329d06c4573f.MOV",
     "static/media/fa-solid-900.svg": "/static/media/fa-solid-900.33f11e8e33e406b0dc21.svg",
-    "static/media/fl.gif": "/static/media/fl.818267af2f3602ed17d3.gif",
     "static/media/fa-brands-400.svg": "/static/media/fa-brands-400.5f2a2f236048660df440.svg",
     "static/media/Montserrat-Regular.ttf": "/static/media/Montserrat-Regular.3cd786652b8a2e9d41f2.ttf",
     "static/media/ino.png": "/static/media/ino.adcd3743af4c9c5e57b5.png",
     "static/media/fa-solid-900.eot": "/static/media/fa-solid-900.d93bcbbb0fbfad39d905.eot",
     "static/media/fa-solid-900.ttf": "/static/media/fa-solid-900.aae41ea25bd0dde9f796.ttf",
+    "static/media/trace4.png": "/static/media/trace4.2dcc996278d0b0741322.png",
     "static/media/fa-regular-400.svg": "/static/media/fa-regular-400.c803f540f9bff56c95a4.svg",
-    "static/media/3d.png": "/static/media/3d.20acee21f3fef173cf06.png",
     "static/media/comp.png": "/static/media/comp.5faaec584a7fae8d8e44.png",
+    "static/media/trace5.png": "/static/media/trace5.760395a04a050b0cae21.png",
     "static/media/iut.png": "/static/media/iut.c1084f0c925c892208c8.png",
     "static/media/fa-brands-400.eot": "/static/media/fa-brands-400.b09f783b99c88d6989f7.eot",
     "static/media/fa-brands-400.ttf": "/static/media/fa-brands-400.ec7723ea62ad74c14959.ttf",
@@ -36,12 +36,11 @@
     "static/media/fa-brands-400.woff2": "/static/media/fa-brands-400.1c638e5f7632ea819e77.woff2",
     "static/media/intel_logo.jpg": "/static/media/intel_logo.d7577f35a3dac4e5636d.jpg",
     "static/media/R2_Shiftpng": "/static/media/R2_Shiftpng.d97c1a4f15c2c06df36b",
-    "static/media/r2.png": "/static/media/r2.78a472ca1437fbb7d809.png",
-    "static/media/rmse.png": "/static/media/rmse.7e1141a6d497d4542438.png",
+    "static/media/trace3.png": "/static/media/trace3.00819e3f4393831edfd3.png",
+    "static/media/trace1.png": "/static/media/trace1.a66b56aba6a566ab68eb.png",
     "static/media/fa-regular-400.eot": "/static/media/fa-regular-400.86ce78132c18df414d83.eot",
     "static/media/fa-regular-400.ttf": "/static/media/fa-regular-400.235a1aa30ba10c7d00d0.ttf",
     "static/media/100.jpg": "/static/media/100.73a08d34ff5c2197374f.jpg",
-    "static/media/variation.png": "/static/media/variation.ed367b2c25828e5e29f5.png",
     "static/media/100.png": "/static/media/100.528a5c8b588ab5846e72.png",
     "static/media/googleAssistant.jpg": "/static/media/googleAssistant.547075a751cc15673246.jpg",
     "static/media/wrighter.jpg": "/static/media/wrighter.0a6efd88c7795e04684b.jpg",
@@ -53,13 +52,14 @@
     "static/media/gamejam.jpg": "/static/media/gamejam.82de945163e8c89092bc.jpg",
     "static/media/fa-regular-400.woff2": "/static/media/fa-regular-400.e5917ad1531005ea8c3f.woff2",
     "static/media/logo-femto.png": "/static/media/logo-femto.015174d5b2b32ae07a8a.png",
+    "static/media/trace2.png": "/static/media/trace2.8d8ce257e8dfe2bba5e4.png",
     "static/media/buld.jpg": "/static/media/buld.55444b9789a64f32e2e5.jpg",
     "index.html": "/index.html",
-    "main.dae9b772.css.map": "/static/css/main.dae9b772.css.map",
-    "main.0212b657.js.map": "/static/js/main.0212b657.js.map"
+    "main.4966cad4.css.map": "/static/css/main.4966cad4.css.map",
+    "main.16de370d.js.map": "/static/js/main.16de370d.js.map"
   },
   "entrypoints": [
-    "static/css/main.dae9b772.css",
-    "static/js/main.0212b657.js"
+    "static/css/main.4966cad4.css",
+    "static/js/main.16de370d.js"
   ]
 }

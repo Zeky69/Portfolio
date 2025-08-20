@@ -695,518 +695,418 @@ const projects = {
 const compentencesHeader = {
   title: "Competence",
   description:
-    "Développement et illustration des compétences clés à travers mon stage",
+    "Analyse détaillée des compétences développées lors de mon alternance : conception d'une application complète, refonte architecturale, automatisation, collaboration et conduite de projet.",
   avatar_image_path: "projects_image.svg",
 };
 const compentences = {
   sections: [
     {
-      title: "Compétence 4 : Gérer des données de l’information",
+      title: "Refonte complète de l’architecture logicielle",
       corpus: [
         {
-          type: "h1",
-          content:
-            "Mettre à jour et interroger une base de données relationnelle (AC 1) et Manipuler des données hétérogènes (AC 4)",
-        },
-        {
-          type: "p",
-          content:
-            "La mise à jour et l'interrogation d'une base de données relationnelle sont essentielles pour gérer les données efficacement. Pendant mon stage, j'ai appliqué ces compétences pour manipuler les données météorologiques et énergétiques, en les structurant pour des analyses et des visualisations optimales.",
-        },
-        {
-          type: "code",
-          title: " Téléchargement et Prétraitement des Données",
-          objectif:
-            " Télécharger des données via une API, les organiser en un format structuré et nettoyé pour les intégrer dans des fichier csv.",
-          code:
-            "def download_data(url='api/wind-toolkit/v2/wind/wtk-download.csv', api_key=None,\n" +
-            '                  email="zek.akburak@gmail.com", names=2009, wkt="POINT(-78.483215 32.104233)", directory=".",\n' +
-            '                  filename="response.csv", **kwargs):\n' +
-            '    url = f"http://developer.nrel.gov/{url}?api_key={api_key}&wkt={wkt}&email={email}&names={names}"\n' +
-            "\n" +
-            "    for key, value in kwargs.items():\n" +
-            '        if key == "attributes":\n' +
-            '            value = ",".join(value)\n' +
-            '        url += f"&{key}={value}"\n' +
-            '    response = requests.request("GET", url)\n' +
-            "    if (response.status_code != 200):\n" +
-            "        print(response.text)\n" +
-            "        return\n" +
-            "    if not os.path.exists(f'{directory}'):\n" +
-            "        os.makedirs(f'{directory}')\n" +
-            "    with open(f'{directory}/{filename}', 'wb') as f:\n" +
-            "        f.write(response.content)\n" +
-            "\n" +
-            "    df_ref = pd.read_csv(f'{directory}/{filename}', skiprows=[0])\n" +
-            "    df_ref['datetime'] = pd.to_datetime(df_ref[['Year', 'Month', 'Day', 'Hour', 'Minute']])\n" +
-            "    df_ref.set_index('datetime', inplace=True)\n" +
-            "    df_ref.drop(columns=['Year', 'Month', 'Day', 'Hour', 'Minute'], inplace=True)\n" +
-            "    df_ref.dropna(axis=1, inplace=True)\n" +
-            "    df_ref.drop_duplicates(inplace=True)\n" +
-            "    df_ref.dropna(axis=0, inplace=True)\n" +
-            "\n" +
-            "    df_ref.to_csv(f'{directory}/{filename}', index=True)\n" +
-            "    return df_ref\n",
-          explication:
-            "Ce script télécharge des données à partir d'une API, les nettoie et les organise en un format prêt à être utilisé pour le programme",
-        },
-        {
-          type: "code",
-          title: "Uniformisation des Colonnes des Données",
-          objectif:
-            "Assurer la cohérence des colonnes à travers différents fichiers de données pour faciliter l'analyse.",
-          explication:
-            "Cette fonction lit tous les fichiers CSV dans un répertoire, trouve les colonnes communes, et ajuste chaque fichier pour ne conserver que ces colonnes. Cela garantit que tous les fichiers ont une structure de données uniforme",
-          code:
-            "def uniform_columns(directory='.'):\n" +
-            "    df_dict = {}\n" +
-            "    for filename in os.listdir(directory):\n" +
-            '        if filename.endswith(".csv"):\n' +
-            "            df = pd.read_csv(f'{directory}/{filename}', parse_dates=True, index_col=0)\n" +
-            "            df_dict[filename] = df\n" +
-            "    # les colonnes en commun\n" +
-            "    columns = set.intersection(*[set(df.columns) for df in df_dict.values()])\n" +
-            "    for filename, df in df_dict.items():\n" +
-            "        df = df[list(columns)].reindex(columns=columns)\n" +
-            "        df.to_csv(f'{directory}/{filename}', index=True)\n" +
-            '    print("Uniform columns")\n' +
-            "            ",
-        },
-        {
-          type: "code",
-          title: "Groupement  des années en un fichier",
-          objectif:
-            "Organiser les fichiers de données par pays, facilitant l'analyse comparative.",
-          explication:
-            " Ce code regroupe les fichiers de données par pays en fonction des noms de fichiers, permettant une organisation plus structurée des données pour des analyses spécifiques par pays.",
-          code:
-            'def group_dataframes_by_country(directory="."):\n' +
-            '    """\n' +
-            "    Lit les fichiers CSV dans le répertoire spécifié et les groupe par pays.\n" +
-            "    \n" +
-            "    :param directory: Répertoire où se trouvent les fichiers CSV. Par défaut, le répertoire courant.\n" +
-            "    :return: Un dictionnaire avec le nom du pays comme clé et une liste de dataframes comme valeur.\n" +
-            '    """\n' +
-            "    # Dictionnaire pour stocker les dataframes par pays\n" +
-            "    dataframes_by_country = {}\n" +
-            "\n" +
-            "    # Obtenir la liste de tous les fichiers dans le répertoire spécifié\n" +
-            '    files = [i for i in os.listdir(directory) if "AllYears" not in i ] \n' +
-            "\n" +
-            "\n" +
-            "    # Lire chaque fichier CSV et le regrouper par pays\n" +
-            "    for file in files:\n" +
-            "        # Vérifier si le fichier est un CSV\n" +
-            '        if file.endswith(".csv"):\n' +
-            "            # Extraire le nom de fichier sans l'extension et les parenthèses\n" +
-            "            filename = os.path.splitext(file)[0].split('(')[0].strip()\n" +
-            "            \n" +
-            "            # Si le pays n'est pas déjà une clé du dictionnaire, l'ajouter\n" +
-            "            if filename not in dataframes_by_country:\n" +
-            "                dataframes_by_country[filename] = []\n" +
-            "            \n" +
-            "            # Lire le fichier CSV et ajouter le dataframe à la liste correspondante\n" +
-            "            filepath = os.path.join(directory, file)\n" +
-            "            df = pd.read_csv(filepath, parse_dates=True, index_col=0)\n" +
-            "            dataframes_by_country[filename].append(df)\n" +
-            "\n" +
-            "    return dataframes_by_country",
+          type: "img",
+          filename: "trace1.png",
+          descrption:
+            "Architecture de requêtes optimisée avec mise en cache (FastAPI • Redis • DuckDB)",
         },
         {
           type: "h1",
-          content: "Optimiser les modèles de données de l’entreprise (AC 1)",
+          content: "Compétences mobilisées",
         },
         {
-          type: "p",
-          content:
-            "L’optimisation des modèles de données implique l'amélioration des structures de données pour une performance accrue et une gestion efficace des informations. Pendant mon stage, j'ai travaillé sur le chargement et la préparation des données en utilisant des techniques de normalisation et de décalage temporel pour maximiser l’efficacité des modèles analytiques.",
-        },
-        {
-          type: "code",
-          title: "Chargement et Préparation des Données",
-          objectif:
-            " Charger et préparer les données en vue de l'entraînement de modèles, en intégrant des fonctionnalités comme le décalage des données, la normalisation, et la création de jeux de données pour l'entraînement, la validation et le test.",
-          explication: [
-            {
-              type: "li",
-              title: "Cette fonction permet de :",
-              content: [
-                "Charger les données à partir de fichiers CSV.",
-                "Resampler les données selon une fréquence spécifiée.",
-                "Décaler les colonnes pour créer des variables en décalé pour l'analyse temporelle.",
-                "Normaliser les colonnes numériques pour améliorer l'entraînement des modèles.",
-                "Diviser les données en jeux d'entraînement, de validation, et de test.",
-              ],
-            },
+          type: "ul",
+          items: [
+            "Réalisation d’un développement d’application (conception d’une architecture back-end robuste, performante et maintenable).",
+            "Conduite de projet (diagnostic de l’existant, arbitrage technologique, migration progressive sans coupure de service).",
           ],
-          code:
-            "def load_data_per_client(y_column, x_columns=None, paths=None, resample='h', type_resample='mean', normalize=True,\n" +
-            "                         test_size=0.3, random_state=None, shift_column=None, shift=None, no_normalize_col=None, y_normalize=False,\n" +
-            '                         split=True, directory="."):\n' +
-            "     #...\n" +
-            "   \n" +
-            "\n" +
-            "    for path in progress:\n" +
-            "       #...\n" +
-            "        if type_resample == 'median':\n" +
-            "            data = data.resample(resample).median()\n" +
-            "        else:\n" +
-            "            data = data.resample(resample).mean()\n" +
-            "\n" +
-            "        if shift_column:\n" +
-            "            if not isinstance(shift_column, list):\n" +
-            "                shift_column = [i for i in data.columns]\n" +
-            "\n" +
-            "            original_column = data[shift_column].copy()\n" +
-            "            shifted_data_list = []\n" +
-            "            for shift_hour in shift:\n" +
-            "                shifted_data = original_column.shift(shift_hour)\n" +
-            '                shifted_data.columns = [f"{column}_t{shift_hour * -1}_{resample}" for column in shifted_data.columns]\n' +
-            "                shifted_data_list.append(shifted_data)\n" +
-            "            drop_colonne = shift_column.copy()\n" +
-            "            if y_column in shift_column:\n" +
-            "                drop_colonne.remove(y_column)\n" +
-            "            data = pd.concat([data] + shifted_data_list, axis=1)\n" +
-            "            data.drop(columns=drop_colonne, inplace=True)\n" +
-            "            \n" +
-            "            \n" +
-            "\n" +
-            "        if normalize:\n" +
-            "            numerical_columns = data.select_dtypes(include=['float64', 'int64']).columns\n" +
-            "\n" +
-            "            if no_normalize_col:\n" +
-            "                exclude_columns = no_normalize_col.copy()\n" +
-            "                for col in no_normalize_col:\n" +
-            '                    exclude_columns.extend([f"{col}_t{shift_hour * -1}_{resample}" for shift_hour in shift])\n' +
-            "                numerical_columns = [col for col in numerical_columns if\n" +
-            "                                     col not in exclude_columns or col not in no_normalize_col]\n" +
-            "\n" +
-            "            if y_column in numerical_columns:\n" +
-            "                numerical_columns = numerical_columns.drop(y_column)\n" +
-            "    \n" +
-            "            xscaler = MinMaxScaler(feature_range=(0, 1))\n" +
-            "            data[numerical_columns] = xscaler.fit_transform(data[numerical_columns])\n" +
-            "            \n" +
-            "            if y_normalize:\n" +
-            "                yscaler = MinMaxScaler(feature_range=(0, 1))\n" +
-            "                data[y_column] = yscaler.fit_transform(data[[y_column]])\n" +
-            "                y_scale_list.append(yscaler)\n" +
-            "                \n" +
-            "        #...\n" +
-            "\n" +
-            "        if split:\n" +
-            "\n" +
-            "            if x_columns is not None:\n" +
-            "                X = data[x_columns]\n" +
-            "            else:\n" +
-            "                X = data.drop(columns=[y_column])\n" +
-            "            y = data[y_column]\n" +
-            "\n" +
-            "            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_state)\n" +
-            "            \n" +
-            "        \n" +
-            "\n" +
-            "            _, X_val, _, y_val = train_test_split(X_train, y_train, test_size=test_size,\n" +
-            "                                                              random_state=random_state)\n" +
-            "\n" +
-            "          #...\n" +
-            "\n" +
-            "        else:\n" +
-            "            df_list.append(data[x_columns + [y_column]])\n" +
-            "            shift_column = shift_original\n" +
-            "\n" +
-            "    if not split:\n" +
-            "        return df_list\n" +
-            "    if y_normalize:\n" +
-            "        return X_train_list, X_val_list, X_test_list, y_train_list, y_val_list, y_test_list,y_scale_list\n" +
-            "    \n" +
-            "    return X_train_list, X_val_list, X_test_list, y_train_list, y_val_list, y_test_list",
         },
         {
           type: "h1",
-          content: "Assurer la confidentialité des données (AC 2)",
+          content: "Choix techniques ",
         },
         {
           type: "p",
           content:
-            "Assurer la confidentialité des données est crucial, en particulier dans les configurations de formation fédérée où les données ne doivent pas être partagées entre clients. J’a du utilisé l’apprentissage fédérée car c’est une technique d'apprentissage  qui permet de former un modèle global en utilisant des données distribuées sur plusieurs clients, sans centraliser les données sur un serveur et ainsi assure la confidentialité ",
+            "⮞ Passage de Flask à FastAPI : le socle hérité était fragmenté et difficilement extensible. Choisir FastAPI répondait à trois besoins :",
         },
         {
-          type: "img",
-          filename: "fl.gif",
-          descrption:
-            "Les modèles locaux téléchargent le modèle global, s’entraînent avec leurs données locales, puis renvoient leurs mises à jour pour créer un modèle global amélioré.",
+          type: "ul",
+          items: [
+            "(1) clarifier la structuration des endpoints via des routeurs, des schémas Pydantic et une documentation OpenAPI générée automatiquement",
+            "(2) améliorer les temps de réponse grâce à un serveur asynchrone capable d’absorber des pics de charge",
+            "(3) sécuriser l’évolution du code avec des types forts et une validation d’entrées systématique",
+          ],
+        },
+        {
+          type: "p",
+          content:
+            " Ce choix était nécessaire pour rendre l’application industrialisable et pérenne, et pour faciliter la coordination avec les autres développeurs et le service informatique.",
+        },
+        {
+          type: "p",
+          content:
+            "⮞ Introduction d’un cache Redis : certains calculs (agrégations récurrentes, mêmes filtres temporels) étaient inutilement recomputés. Redis mémorise les résultats chauds, ce qui diminue la charge CPU, stabilise les temps de réponse et fluidifie les explorations utilisateur. C’était indispensable pour soutenir les explorations successives sur des périodes/centres adjacents, sans dégrader l’expérience.",
+        },
+        {
+          type: "p",
+          content:
+            "⮞ Réorganisation modulaire (routes / services / modèles / utilitaires) : la lisibilité et l’extensibilité dépendaient d’une séparation stricte des responsabilités. En isolant la logique métier (services), l’accès données (repositories DuckDB), l’API (routes) et les contrats (schémas), je facilite le test unitaire, l’onboarding d’un nouveau développeur et l’introduction future de nouvelles fonctionnalités (simulation) sans dette exponentielle.",
         },
         {
           type: "h1",
-          content: "Visualisation des Données (AC 2)",
+          content: "Savoirs mobilisés —",
         },
         {
-          type: "p",
-          content:
-            "La visualisation des données a été essentielle pour comprendre les tendances et les modèles des données. J'ai utilisé des bibliothèques telles que Matplotlib et Seabron pour créer des graphiques permettant de visualiser ces informations de manière claire et précise.",
-        },
-
-        {
-          type: "img",
-          filename: "variation.png",
-          descrption:
-            "Global Horizontal Irradiance (GHI) : La mesure de la densité de flux radiatif solaire totale en W/m² reçue par une surface horizontale mesuré par heure pour le 22 novembre 2023, montrant une courbe typique de l'irradiance solaire sur une journée.",
+          type: "ul",
+          items: [
+            "Architecture REST et modélisation par couches : nécessaire pour découpler IHM, calcul et stockage, réduire les effets de bord et accélérer les cycles de release.",
+            "Modélisation analytique (DuckDB/Parquet) : requises pour des requêtes colonnes, agrégations temporelles et jointures efficaces sur des volumes réels.",
+            "Stratégies de cache (Redis) : indispensables pour garantir la réactivité perçue en usage exploratoire répété.",
+            "Normalisation des schémas (Pydantic) : essentielle pour valider/typer les données et sécuriser les échanges front/back.",
+          ],
         },
         {
-          type: "img",
-          filename: "3d.png",
-          descrption:
-            "\n" +
-            "Relation tridimensionnelle de l'Irradiance Globale Horizontale (GHI) mesurée à trois moments : GHI à l'instant t, GHI une heure plus tard (t+1), et GHI deux heures plus tard (t+2). Les points montrent la corrélation entre ces valeurs horaires.",
+          type: "h1",
+          content: "Savoir-faire démontrés ",
         },
         {
-          type: "p",
-          content:
-            "Pendant mon stage, j'ai réalisé des dizaines de graphiques. Voici quelques exemples. Grâce à ce travail, j'ai amélioré ma compétence en visualisation de données en créant des graphiques clairs qui permettent d'interpréter et de communiquer les tendances et les anomalies, facilitant ainsi la prise de décision et la compréhension des données complexes.",
+          type: "ul",
+          items: [
+            "Audit d’un existant hétérogène et priorisation des refontes critiques (architecture avant fonctionnalités).",
+            "Migration technologique sans rupture (Feature flags, compat de schémas, ports API stables).",
+            "Benchmarks ciblés sur latences/consommations et instrumentation des points chauds (avant/après).",
+            "Documentation des patterns et guidelines internes (arborescence, conventions, contrats d’API).",
+          ],
+        },
+        {
+          type: "h1",
+          content: "Contraintes & risques ",
+        },
+        {
+          type: "ul",
+          items: [
+            "Risque de régression : suite de tests de non-régression sur endpoints critiques et échantillons de données.",
+            "Courbe d’apprentissage : notes d’architecture et exemples d’implémentation pour l’équipe.",
+            "Interop technique SDIS : validation conjointe des versions Linux/Python/ports/services.",
+          ],
         },
       ],
     },
     {
-      title: "Compétence 2 : Optimiser des applications",
+      title: "Génération automatique de rapports PDF dynamiques",
+      corpus: [
+        {
+          type: "img",
+          filename: "trace2.png",
+          descrption:
+            "Chaîne de génération de rapports PDF dynamiques version côté serveur",
+        },
+        {
+          type: "h1",
+          content: "Compétences mobilisées",
+        },
+        {
+          type: "ul",
+          items: [
+            "Réalisation d’un développement d’application (pipeline d’export robuste, du front jusqu’au serveur).",
+            "Conduite de projet (itérations, pivot technique front → serveur, arbitrages performance/fiabilité).",
+          ],
+        },
+        {
+          type: "h1",
+          content: "Choix techniques  ",
+        },
+        {
+          type: "p",
+          content:
+            "⮞ Initialement côté front uniquement (jsPDF + html2canvas) : logique DOM→canvas rapide à mettre en place pour tester la désirabilité. Mais limites structurelles : découpe approximative, artefacts graphiques, dépendance aux performances du poste et plantages pour de longues pages multi-graphiques. Ces constats ont objectivé la nécessité d’un pivot.",
+        },
+        {
+          type: "p",
+          content:
+            "⮞ Pivot serveur : recoder la génération des visuels côté back-end et assembler le PDF sur le serveur élimine les goulots du DOM, fiabilise le rendu (headless) et stabilise le temps de génération (≈ dizaine de secondes), quel que soit le poste client. Ce choix répond au critère opérationnel : rapports complets, lisibles et reproductibles.",
+        },
+        {
+          type: "h1",
+          content: "Savoirs mobilisés",
+        },
+        {
+          type: "ul",
+          items: [
+            "Compréhension de l’architecture des documents PDF : savoir-faire en matière de structure, de balisage et de mise en page.",
+            "Architecture de services : endpoint d’export, orchestration des rendus, stockage temporaire, streaming du PDF.",
+          ],
+        },
+        {
+          type: "h1",
+          content: "Savoir-faire démontrés ",
+        },
+        {
+          type: "ul",
+          items: [
+            "Itération et preuve par l’expérimentation (prototype front, mesure, décision argumentée).",
+            "Conception d’un pipeline serveur tolérant aux volumes (pas de plantage).",
+            "Amélioration tangible d’usage : export stable et rapide sur des pages riches.",
+          ],
+        },
+        {
+          type: "h1",
+          content: "Contraintes & risques ",
+        },
+        {
+          type: "ul",
+          items: [
+            "Homogénéité visuelle entre écran et PDF : le style graphique n’est pas toujours respecté mais des efforts ont été faits pour minimiser les écarts.",
+            "Charge serveur : file d’attente , trop de requêtes simultanées peuvent impacter les performances.",
+          ],
+        },
+      ],
+    },
+    {
+      title: "Page CPIO",
+      corpus: [
+        {
+          type: "img",
+          filename: "trace3.png",
+          descrption:
+            "Vue CPIO : entonnoir Département → Compagnie → Centre, cartes/graphes et filtres analytiques.",
+        },
+        {
+          type: "h1",
+          content: "Compétence(s) mobilisée(s)",
+        },
+        {
+          type: "ul",
+          items: [
+            "Réalisation d’un développement d’application (conception d’une page analytique complète et réactive).",
+            "Conduite de projet (co-conception avec utilisateurs, choix UI/UX, priorisation des optimisations).",
+          ],
+        },
+        {
+          type: "h1",
+          content: "Choix techniques  ",
+        },
+        {
+          type: "p",
+          content:
+            "⮞ Maquettage Figma : produire une maquette validée avec les opérationnels a réduit les aller-retour et sécurisé l’adéquation fonctionnelle (choix des graphes, filtres, organisation des blocs). Cette étape a cadré précisément les attentes avant dev.",
+        },
+        {
+          type: "p",
+          content:
+            "⮞ Composants graphiques réutilisables (AmCharts5) : capitaliser un socle commun (barres, lignes, camemberts, cartes) évite l’hétérogénéité visuelle, diminue le coût de maintenance et facilite les évolutions. Le choix d’une lib unique renforce la cohérence et la performance.",
+        },
+        {
+          type: "p",
+          content:
+            "⮞ Filtres avancés et pré-calcul côté base : pour des filtres fréquents (jours fériés, vacances, nocturne…), j’ai précalculé et indexé ces attributs dans les tables analytiques. Impact direct : latences divisées par ~10 (≈ 10 s → < 1 s), rendant l’exploration fluide. C’était indispensable pour un indicateur décisionnel consulté en réunion.",
+        },
+        {
+          type: "p",
+          content:
+            "⮞ Disposition « entonnoir » (global → local) : le raisonnement opérationnel suit naturellement le passage Département → Compagnie → Centre. Ce parti-pris d’UX réduit la charge cognitive, structure la navigation et aide à la priorisation des actions.",
+        },
+        {
+          type: "h1",
+          content: "Savoirs mobilisés ",
+        },
+        {
+          type: "ul",
+          items: [
+            "Data visualisation appliquée (choix des graphes adaptés à l’indicateur CPIO et au public).",
+            "Modélisation analytique (dates spéciales, buckets temporels) pour requêtes déterministes et rapides.",
+            "UX d’exploration hiérarchique et gestion de filtres corrélés (éviter les recomputations inutiles).",
+          ],
+        },
+        {
+          type: "h1",
+          content: "Savoir-faire démontrés ",
+        },
+        {
+          type: "ul",
+          items: [
+            "Traduction d’un rapport métier papier en interface interactive exploitable.",
+            "Optimisation guidée par mesures (pré-calculs, indexation) jusqu’à < 1 s de latence moyenne.",
+            "Conception centrée utilisateur (validation maquette, filtres par besoin réel, logique entonnoir).",
+          ],
+        },
+        {
+          type: "h1",
+          content: "Contraintes & risques ",
+        },
+        {
+          type: "ul",
+          items: [
+            "Grand nombre de visuels sur une page : chargement à la demande, menus déroulants pour contenir la charge sans perdre l’accès global.",
+            "Cohérence métier : cadrage sémantique de l’indicateur (définitions, périmètres) validé avec les utilisateurs.",
+          ],
+        },
+      ],
+    },
+    {
+      title: "Tableau de bord personnalisable (widgets dynamiques, ECharts)",
+      corpus: [
+        {
+          type: "img",
+          filename: "trace4.png",
+          descrption:
+            "Éditeur de widget : choix dataset, type de graphe, filtres et style, avec aperçu en temps réel.",
+        },
+        {
+          type: "h1",
+          content: "Compétence(s) mobilisée(s)",
+        },
+        {
+          type: "ul",
+          items: [
+            "Réalisation d’un développement d’application (système de widgets dynamiques persistés et performants).",
+            "Conduite de projet (recueil besoins, refonte front, passage AmCharts5 → ECharts, accompagnement du changement).",
+          ],
+        },
+        {
+          type: "h1",
+          content: "Choix techniques  ",
+        },
+        {
+          type: "p",
+          content:
+            "⮞ Passage de AmCharts5 à ECharts  : besoin d’un éventail graphique plus large, d’un rendu moderne et d’options poussées de personnalisation. ECharts offre une API riche, une bonne performance, et une intégration fluide avec Vue. Cela répond à la demande d’autonomie (utilisateur configure ses propres graphes) et ouvre la porte à de nouveaux types de visualisations.",
+        },
+        {
+          type: "p",
+          content:
+            "⮞ Système de widgets persistés : chaque widget est un contrat (dataset + transformation + type de graphe + style + filtres). En stockant ces contrats en base, je rends la configuration durable, partageable et réutilisable. Cela répond au besoin de personnalisation sans développement additionnel et garantit un temps d’accès constant, car seule la requête paramétrée varie.",
+        },
+        {
+          type: "p",
+          content:
+            "⮞ Éditeur avec aperçu en temps réel : l’utilisateur voit immédiatement l’impact d’un choix de filtre ou d’un changement de type de graphe. Cela réduit l’essai/erreur, augmente l’appropriation de l’outil et diminue les demandes de développements spécifiques, tout en maintenant une cohérence UX globale.",
+        },
+        {
+          type: "h1",
+          content: "Savoirs mobilisés",
+        },
+        {
+          type: "ul",
+          items: [
+            "Architecture front orientée composants (Vue) pour encapsuler la logique d’un widget et sa réactivité.",
+            "Conception de schémas de configuration (contrats) pour persister et rejouer les tableaux de bord.",
+            "Assemblage de requêtes paramétrées côté back pour servir vite et juste (compat DuckDB/Parquet).",
+          ],
+        },
+        {
+          type: "h1",
+          content: "Savoir-faire démontrés ",
+        },
+        {
+          type: "ul",
+          items: [
+            "Refonte complète d’un front pour passer d’un rapport figé à une plateforme configurable.",
+            "Conception d’un éditeur UX avancé (aperçu live, options riches) aligné sur les usages SDIS.",
+            "Stabilisation des performances grâce à des requêtes ciblées et à la mutualisation de composants.",
+          ],
+        },
+      ],
+    },
+    {
+      title: "Projet SPVConnect",
       corpus: [
         {
           type: "h1",
-          content: "Analyser un problème avec méthode",
+          content: "Objectif et contexte",
         },
         {
-          type: "code",
-          title: "Découpage du code en élément simple",
-          objectif:
-            "Le code divise un algorithme en sous-algorithmes simples pour améliorer sa lisibilité et son efficacité. Cela rend le code plus clair et plus facile à comprendre, ce qui facilite le processus d'apprentissage fédéré pour entraîner des modèles de régression MLP sur plusieurs clients.",
-          explication:
-            "Chaque méthode d'agrégation est encapsulée dans une fonction distincte, telles que WeightedAggregatedModels, LaplacianMeanAggregatedModels, MedianAggregatedModels, TrimmedMeanAggregatedModels et GeometricMedianAggregatedModels, ainsi que les fonctions pour l'entraînement et le test des modèles. Ces fonctions permettent d'agréger de manière spécifique les poids et les biais des modèles provenant de différents clients, en fonction de la méthode choisie.Ces sous-algorithmes distincts permettent d'appliquer la compétence consistant à analyser un problème avec méthode, en découpant l'algorithme en éléments simples et en structurant les données de manière appropriée.",
-          code:
-            "def MLPTraining(X_train_scaled, y_train, X_val_scaled, y_val, X_test_scaled, y_test, hidden_layer_sizes=(64, 32),\n" +
-            "  mlp_regressor=None, verbose=False, learning_rate_init=0.01, random_state=42, max_iter=10000,\n" +
-            "  learning_rate=\"constant\", activation='relu', solver='adam'):\n" +
-            "  #...\n" +
-            "\n" +
-            "\n" +
-            "def MLPTesting(mlp_regressor_aggregated, X_val_scaled, y_val, X_test_scaled, y_test, verbose=False):\n" +
-            "  #...\n" +
-            "\n" +
-            "def MeanAggregatedModels(WeightsAll, BiasesAll):\n" +
-            "  #...\n" +
-            "\n" +
-            "def WeightedAggregatedModels(WeightsAll, BiasesAll, weights):\n" +
-            "  #...\n" +
-            "\n" +
-            "def LaplacianMeanAggregatedModels(WeightsAll, BiasesAll, sensitivity, epsilon):\n" +
-            "  #...\n" +
-            "\n" +
-            "\n" +
-            "def MedianAggregatedModels(WeightsAll, BiasesAll):\n" +
-            "  #...\n" +
-            "\n" +
-            "def TrimmedMeanAggregatedModels(WeightsAll, BiasesAll, trim_fraction):\n" +
-            "  #...\n" +
-            "\n" +
-            "def GeometricMedianAggregatedModels(WeightsAll, BiasesAll):\n" +
-            "  #...\n" +
-            "\n" +
-            "def federatedLearning(n_client, X_train_scaled, y_train, X_val_scaled, y_val, X_test_scaled, y_test,\n" +
-            "  hidden_layer_sizes=(64, 32), round=5, aggregation='Mean', learning_rate_init=0.01,\n" +
-            "  random_state=42, max_iter=10000, activation='relu', learning_rate=\"constant\", solver='adam', best_model=False,\n" +
-            "  param_aggr=None):\n" +
-            "\n" +
-            "  #...\n" +
-            "  for epoch in range(round):\n" +
-            "    for iter in range(n_client):\n" +
-            "      weights, biases, mlp_regressor = MLPTraining(X_train_scaled[iter], y_train[iter], X_val_scaled[iter],\n" +
-            "        y_val[iter], X_test_scaled[iter], y_test[iter],\n" +
-            "        hidden_layer_sizes=hidden_layer_sizes,\n" +
-            "        learning_rate_init=learning_rate_init,\n" +
-            "        learning_rate=learning_rate,\n" +
-            "        random_state=random_state, max_iter=max_iter,\n" +
-            "        activation=activation, solver=solver)\n" +
-            "\n" +
-            "  #...\n" +
-            "  match aggregation:\n" +
-            '     case "Mean":\n' +
-            "       aggregatedWeights, aggregatedBiases = MeanAggregatedModels(WeightsAll, BiasesAll)\n" +
-            '     case "Median":\n' +
-            "       aggregatedWeights, aggregatedBiases = MedianAggregatedModels(WeightsAll, BiasesAll)\n" +
-            '     case "Weighted":\n' +
-            "       aggregatedWeights, aggregatedBiases = WeightedAggregatedModels(WeightsAll, BiasesAll, param_aggr)\n" +
-            '     case "TrimmedMean":\n' +
-            "       aggregatedWeights, aggregatedBiases = TrimmedMeanAggregatedModels(WeightsAll, BiasesAll, param_aggr)\n" +
-            '     case "GeometricMedian":\n' +
-            "       aggregatedWeights, aggregatedBiases = GeometricMedianAggregatedModels(WeightsAll, BiasesAll)\n" +
-            '     case "Laplacian":\n' +
-            "       aggregatedWeights, aggregatedBiases = LaplacianMeanAggregatedModels(WeightsAll, BiasesAll,\n" +
-            "                                                                             sensitivity=param_aggr['sensitivity'],\n" +
-            "                                                                             epsilon=param_aggr['epsilon'])\n" +
-            "\n" +
-            "  #...\n" +
-            "temp_result = MLPTesting(mlp_regressor_aggregated, X_val_scaled[-1], y_val[-1], X_test_scaled[-1], y_test[-1])\n" +
-            "\n" +
-            "  #...\n",
+          type: "p",
+          content:
+            "SPVConnect vise à dématérialiser et optimiser l’admission des sapeurs-pompiers volontaires (SPV) — une procédure aujourd’hui lourde pour les chefs de centre et les services RH. Le flux actuel repose sur un formulaire papier, la constitution d’un dossier RH numérique à partir de ce papier, l’ajout de pièces justificatives et la prise de plusieurs rendez-vous (médical, épreuves physiques, entretiens). Des processus déjà numérisés comme l’assignation des droits et la création de comptes sur le réseau sont perfectibles et peuvent être automatisés. L’outil cherche à uniformiser les procédures entre SDIS pour tendre vers un niveau supra-départemental, tout en conservant la maîtrise interne des données (plutôt que de déléguer à des logiciels RH d’éditeurs privés) et en assurant la cohérence entre informations saisies. Bien que la cible initiale soit les volontaires, nombre d’étapes sont mutualisables pour le recrutement des professionnels. L’objectif final est de proposer une procédure simple, fiable, traçable et globale, qui sécurise le flux des données et réduit les frictions administratives pour l’ensemble des acteurs.",
         },
         {
           type: "h1",
-          content: "Comparer des algorithmes pour des problèmes classiques ",
+          content: "Méthodologie et outils",
         },
         {
           type: "p",
           content:
-            "La comparaison des algorithmes est essentielle pour déterminer lequel est le plus adapté à un problème donné. J'ai comparé plusieurs algorithmes de régression MLP pour l'apprentissage fédéré, tels que Mean, Median, Weighted, Trimmed Mean, Geometric Median et Laplacian Mean, pour évaluer leur performance et leur efficacité dans la formation de modèles de régression sur plusieurs clients.",
-        },
-        {
-          type: "code",
-          title: "Comparaison des Algorithmes de Régression MLP",
-          objectif:
-            "Comparer les performances des algorithmes de régression MLP pour l'apprentissage fédéré, en évaluant leur précision, leur vitesse d'apprentissage et leur capacité à généraliser les données.",
-          explication:
-            "Les algorithmes de régression MLP sont entraînés sur les données de chaque client, puis les modèles sont agrégés en utilisant différentes méthodes d'agrégation pour créer un modèle global. Ce modèle global est ensuite testé sur les données de validation et de test pour évaluer sa précision et sa capacité à généraliser les données. Les performances des algorithmes sont comparées en fonction de leur précision, de leur vitesse d'apprentissage et de leur capacité à généraliser les données, permettant de déterminer lequel est le plus adapté à un problème donné.",
-          code:
-            "def execute_ml_pipeline(y_column, paths, resample, resample_method, normalize, test_size, random_state,\n" +
-            "                        shift, shift_column, no_normalize_col, N_CLIENT, hidden_layer_sizes, ROUND,\n" +
-            "                        trim_fraction, sensitivity, epsilon, weight, activation, solver, learning_rate_init,\n" +
-            "                        learning_rate, max_iter, aggregation_methods, directory, data_directory, x_columns=None,y_normalize=False):\n" +
-            "    \n" +
-            "    \n" +
-            "    y_scaler_list = []\n" +
-            "    \n" +
-            "    if not y_normalize:\n" +
-            "        if x_columns is None and y_column is not None and no_normalize_col is not None:\n" +
-            "            no_normalize_col += [y_column]\n" +
-            "    \n" +
-            "        X_train, X_val, X_test, y_train, y_val, y_test = load_data_per_client(y_column, x_columns=x_columns, paths=paths,\n" +
-            "                                                                              resample=resample,\n" +
-            "                                                                              type_resample=resample_method,\n" +
-            "                                                                              normalize=normalize, test_size=test_size,\n" +
-            "                                                                              random_state=random_state, shift=shift,\n" +
-            "                                                                              shift_column=shift_column,\n" +
-            "                                                                              directory=data_directory,\n" +
-            "                                                                              no_normalize_col=no_normalize_col\n" +
-            "                                                                              )\n" +
-            "        \n" +
-            "        \n" +
-            "    else:\n" +
-            "         X_train, X_val, X_test, y_train, y_val, y_test , y_scaler_list = load_data_per_client(y_column, x_columns=x_columns, paths=paths,\n" +
-            "                                                                              resample=resample,\n" +
-            "                                                                              type_resample=resample_method,\n" +
-            "                                                                              normalize=normalize, test_size=test_size,\n" +
-            "                                                                              random_state=random_state, shift=shift,\n" +
-            "                                                                              shift_column=shift_column,\n" +
-            "                                                                              directory=data_directory,\n" +
-            "                                                                              no_normalize_col=no_normalize_col,\n" +
-            "                                                                                y_normalize=y_normalize\n" +
-            "                                                                              )\n" +
-            "        \n" +
-            "    \n" +
-            "    \n" +
-            "\n" +
-            "    result, result_one_client = test_all_aggregation_methods(N_CLIENT, X_train, y_train, X_val, y_val, X_test, y_test,y_scaler=y_scaler_list,\n" +
-            "                                                             hidden_layer_sizes=hidden_layer_sizes, round=ROUND,\n" +
-            "                                                             trim_fraction=trim_fraction, sensitivity=sensitivity,\n" +
-            "                                                             epsilon=epsilon, weight=weight, activation=activation,\n" +
-            "                                                             solver=solver, learning_rate_init=learning_rate_init,\n" +
-            "                                                             learning_rate=learning_rate, random_state=random_state,\n" +
-            "                                                             max_iter=max_iter, aggregation_methods=aggregation_methods)\n" +
-            "\n" +
-            "    result.to_csv(f'{directory}/FMLR/{N_CLIENT}_clients_{ROUND}_rounds.csv')\n" +
-            "    plot_multiple_lineplots(data=result,\n" +
-            "                        x_col='Round',\n" +
-            "                        y_col=['Validation RMSE', 'Test RMSE', 'R2 Score','R2 Score (Inverse Normalize)','Test RMSE (Inverse Normalize)'],\n" +
-            "                        hue_col='Method',\n" +
-            "                        style_col='Method',\n" +
-            "                        markers=True,\n" +
-            "                        log_scale=False,\n" +
-            "                        xlim=[[0, ROUND], [0, ROUND], [0, ROUND], [0, ROUND], [0, ROUND], [0, ROUND]],\n" +
-            "                        ylim=[None, None, [0.8, 1], [0.8, 1], None, None],\n" +
-            "                        filename=f'{N_CLIENT}_clients_{ROUND}_rounds.png',\n" +
-            "                        directory=directory + '/FMLR'\n" +
-            "                        )\n" +
-            "    return result\n",
+            "Le projet est en phase de conception et de maquettage afin de valider les besoins et d’expérimenter des solutions avant développement complet. Une cartographie des processus a été co-construite avec le SDIS 25 pour objectiver le parcours d’admission, ses acteurs et ses points de friction. Cette base alimente une approche incrémentale : on priorise les irritants à fort impact, on prototype rapidement, on confronte aux usages, puis on itère.",
         },
         {
           type: "img",
-          filename: "r2.png",
+          filename: "trace5.png",
           descrption:
-            "Comparaison des scores R2 pour les différentes méthodes d'agrégation des modèles de régression MLP sur plusieurs clients, montrant la performance relative de chaque méthode.",
+            "Logigramme des étapes de l’admission SPV (Draw.io) — périmètre et acteurs de SPVConnect",
         },
         {
-          type: "img",
-          filename: "rmse.png",
-          descrption:
-            "Comparaison des erreurs quadratiques moyennes pour les différentes méthodes d'agrégation des modèles de régression MLP sur plusieurs clients, montrant la précision relative de chaque méthode.",
+          type: "ul",
+          items: [
+            "Analyser les processus actuels : formalisation en logigrammes pour rendre visibles les validations, ressaisies, dépendances et goulots d’étranglement.",
+            "Identifier les tâches répétitives/sources d’erreurs : ressaisies d’identité, pièces justificatives manquantes, suivis par e-mails dispersés, rendez-vous échelonnés.",
+            "Concevoir des maquettes et micro-PoC (Vue 3 + Flask) : tester la valeur d’usage (ergonomie des formulaires, upload guidé, checklist, relances automatiques) avant investissement lourd.",
+            "Co-concevoir avec les utilisateurs (chefs de centre, RH) : retours rapides pour ajuster les écrans, le wording, les règles et les notifications.",
+            "Planifier sans jalons rigides : cadence opportuniste en fonction de la charge des autres projets, tout en maintenant la traçabilité des décisions produit.",
+          ],
         },
         {
           type: "p",
           content:
-            "Les graphiques ci-dessus montrent la comparaison des scores R2 et des erreurs quadratiques moyennes pour les différentes méthodes d'agrégation des modèles de régression MLP sur plusieurs clients. Ces graphiques permettent de visualiser la performance relative de chaque méthode et de déterminer laquelle est la plus adaptée à un problème donné. Grâce à cette analyse comparative, j'ai amélioré ma compétence en comparaison des algorithmes pour des problèmes classiques, en évaluant les performances des algorithmes et en déterminant lequel est le plus efficace pour un problème donné.",
+            "Choix outillés : Draw.io pour les logigrammes (vision partagée et versionnable), un stack de prototypage rapide (Vue 3 pour la réactivité UI, Flask pour une API simple à étendre), et une gestion de configuration orientée environnement SDIS (préfiguration d’une intégration SSO, annuaire interne, et futurs webhooks pour les flux RH).",
         },
         {
           type: "h1",
-          content:
-            "Utiliser des techniques algorithmiques adaptées pour des problèmes",
+          content: "Résultats attendus",
+        },
+        {
+          type: "ul",
+          items: [
+            "Procédure allégée et lisible : un parcours unifié par acteur (candidat, chef de centre, RH) avec des écrans contextualisés, limitant les allers-retours et les incompréhensions.",
+            "Intégration au SI SDIS : brique interne s’inscrivant dans l’architecture sécurisée (maîtrise du cycle de vie des données, auditabilité, résilience).",
+            "Réduction des erreurs de saisie : import guidé, contrôles de cohérence, blocage des étapes tant que les pièces et validations requises ne sont pas conformes.",
+            "Amélioration du suivi : tableau de bord centralisé par rôle (tâches à faire, relances automatiques, jalons, rôle et responsabilité clairs à chaque étape).",
+            "Déploiement progressif : expérimentation sur 2 SDIS pilotes (SDIS 01 et SDIS 25), capitalisation des retours, puis généralisation progressive.",
+          ],
         },
         {
           type: "p",
           content:
-            "L'utilisation de techniques algorithmiques adaptées est essentielle pour résoudre efficacement les problèmes complexes. J'avais un probleme de complexité lors de la recherche d'hyperparamètres optimaux pour les modèles de régression MLP. J'ai utilisé l'optimisation bayésienne pour trouver les hyperparamètres optimaux, en utilisant la bibliothèque scikit-optimize pour minimiser la fonction de perte et trouver les hyperparamètres qui maximisent la précision du modèle. Au lieu de tester manuellement différents hyperparamètres en faisant des boucles imbriquées.",
+            "Le temps global du processus (contraint par rendez-vous médicaux et épreuves) évoluera peu, mais la fluidité et la fiabilité de chaque étape augmenteront nettement : moins d’attente côté candidats, moins de suivi manuel côté chefs de centre/RH, meilleure traçabilité pour l’organisation.",
         },
         {
-          type: "code",
-          title:
-            "Optimisation des Hyperparamètres avec l'Optimisation Bayésienne",
-          objectif:
-            "Optimiser les hyperparamètres des modèles de régression MLP en utilisant l'optimisation bayésienne pour minimiser la fonction de perte et maximiser la précision du modèle.",
-          explication:
-            "Le code suivant sert a trouvé l'hyperparamètre optimal pour les modèles de régression MLP en utilisant l'optimisation bayésienne.",
-          code:
-            "# Function with constrained hyperparameters for stability\n" +
-            "def tune_mlp_regression_bayes(\n" +
-            "        X,\n" +
-            "        y,\n" +
-            "        test_size=0.2,\n" +
-            "        random_state=42,\n" +
-            "        max_neurons_per_layer=200,  # Constrain maximum neurons\n" +
-            "        layer=3,\n" +
-            "        max_iter=3000,  # Constrain maximum iterations\n" +
-            '        activation_functions=["relu", "tanh"],\n' +
-            "        learning_rates=[0.00001, 0.0001, 0.001, 0.01, 0.1],  # Constrain learning rates\n" +
-            '        learning_rate_types=["constant", "adaptive"],\n' +
-            '        solvers=["adam", "sgd"],\n' +
-            "        n_iter=100,  # Reduce number of iterations for BayesSearchCV\n" +
-            "):\n" +
-            "    search_space = {\n" +
-            '        "activation": Categorical(activation_functions),\n' +
-            '        "learning_rate": Categorical(learning_rate_types),\n' +
-            '        "learning_rate_init": Real(min(learning_rates), max(learning_rates), prior="log-uniform"),\n' +
-            '        "max_iter": Integer(1500, max_iter),  # Maximum iterations\n' +
-            "    }\n" +
-            " #...\n" +
-            "    model = MLPRegressorTuned()\n" +
-            "    scoring = make_scorer(mean_squared_error, greater_is_better=False)\n" +
-            "\n" +
-            "    bayes_search = BayesSearchCV(\n" +
-            "        model,\n" +
-            "        search_space,\n" +
-            "        n_iter=n_iter,\n" +
-            "        scoring=scoring,\n" +
-            "        n_jobs=-1,\n" +
-            "        cv=3,\n" +
-            "        verbose=1,\n" +
-            "        random_state=random_state,\n" +
-            "    )\n" +
-            "\n" +
-            "    X_train, X_test, y_train, y_test = train_test_split(\n" +
-            "        X, y, test_size=test_size, random_state=random_state\n" +
-            "    )\n" +
-            "\n" +
-            "    try:\n" +
-            "        bayes_search.fit(X_train, y_train)\n" +
-            "    except ValueError as e:\n" +
-            '        raise ValueError(f"Error during Bayesian optimization: {e}")\n' +
-            "    return bayes_search",
+          type: "h1",
+          content: "Compétence(s) mobilisée(s)",
+        },
+        {
+          type: "ul",
+          items: [
+            "Réalisation d’un développement d’application : modélisation de formulaires complexes, contrôles métier, gestion des pièces, orchestration d’étapes et notifications ; prototypage Vue 3 + Flask permettant de valider la faisabilité technique et l’ergonomie avant industrialisation.",
+            "Conduite de projet : cadrage par logigramme, priorisation par impact, co-conception avec les utilisateurs (chefs de centre, RH), itérations courtes pour réduire les risques ; stratégie de déploiement piloté par des SDIS pilotes et collecte systématique de feedback.",
+            "Collaboration au sein d’une équipe informatique : alignement avec les contraintes SI (sécurité, annuaire, interopérabilité), partage de décisions outillées (Draw.io, specs légères), et préparation de l’industrialisation (glossaire commun, contrats d’API et mapping des données RH).",
+          ],
+        },
+        {
+          type: "h1",
+          content: "Savoirs mobilisés ",
+        },
+        {
+          type: "ul",
+          items: [
+            "Cartographie de processus (logigrammes) : indispensable pour rendre explicites les dépendances, clarifier les rôles, identifier les re-saisies et décider des automatisations prioritaires.",
+            "Conception d’IHM de formulaires : nécessaire pour réduire la charge cognitive (sections, validations progressives, pièces attendues, aide contextuelle) et limiter les erreurs.",
+            "Contrôles et règles métier : pour garantir la complétude et la cohérence des dossiers (ex : blocage sans visite médicale, dates incohérentes, pièces expirées).",
+            "Orchestration d’étapes et notifications : pour fiabiliser le passage de relais (candidat → chef de centre → RH) et sécuriser les délais (relances automatiques, journaux).",
+            "Préparation à l’intégration SI : prévoir SSO/annuaire, traçabilité, sécurité des pièces, et interopérabilité avec les briques RH pour une montée en charge sereine.",
+          ],
+        },
+        {
+          type: "h1",
+          content: "Savoir-faire démontrés",
+        },
+        {
+          type: "ul",
+          items: [
+            "Formaliser un processus multi-acteurs et en extraire un parcours numérique clair et actionnable.",
+            "Prototyper rapidement l’expérience (Vue 3 + Flask) pour dérisquer l’ergonomie, la logique de dossier et l’upload de pièces.",
+            "Co-construire avec le terrain (chefs de centre, RH) et itérer sur les écrans, wording et règles.",
+            "Préfigurer l’industrialisation (sécurité, interopérabilité, déploiement pilote) avant d’engager du temps de développement conséquent.",
+          ],
         },
       ],
     },

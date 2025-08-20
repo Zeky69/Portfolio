@@ -36,15 +36,23 @@ function Experience(props) {
           </div>
         </Fade>
       </div>
-      <div>
-        <h1>Competence aquis lors du stage :</h1>
-        <p>
-          Au laboratoire FEMTO-ST, j'ai développé des modèles d'apprentissage
-          fédéré pour optimiser la consommation et la production d'énergie
-          solaire et éolienne, alliant analyse de données et intelligence
-          artificielle.
-        </p>
-      </div>
+      {/* <section className="competence-intro">
+        <div className="competence-intro-card" style={{background: theme.imageDark ? theme.imageDark : "#1d1d1d"}}>
+          <h2 className="competence-intro-title">Contexte Synthétique</h2>
+          <p className="competence-intro-text">
+            Optimops est un outil interne conçu pour moderniser l'analyse opérationnelle du SDIS&nbsp;25 : centralisation, visualisation interactive, génération automatisée de rapports PDF et préparation d'un module futur de simulation des moyens. Cette section détaille les compétences développées autour de deux axes principaux :<br/>
+            <strong>Compétence A</strong> – Réalisation d'un développement d'application (refonte front/back, optimisation, modularisation) et <strong>Compétence AC</strong> – Conduite de projet & collaboration (organisation, validation utilisateur, déploiement). Les contenus ci‑dessous présentent traces, analyses critiques et synthèse d'impact.
+          </p>
+          <ul className="competence-keypoints">
+            <li>Refonte progressive d'un prototype vers une application structurée</li>
+            <li>Interfaces métier ergonomiques validées par maquettes</li>
+            <li>Optimisation des temps d'accès (&lt;1s sur vues critiques)</li>
+            <li>Automatisation documentaire (rapports PDF stables)</li>
+            <li>Architecture prête pour évolutions (widgets personnalisables)</li>
+            <li>Collaboration multi-acteurs & adaptation du discours</li>
+          </ul>
+        </div>
+      </section> */}
       <CompetenceAccordion sections={compentences["sections"]} theme={theme} />
       <Footer theme={props.theme} onToggle={props.onToggle} />
     </div>

@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.098c1285.css",
-    "main.js": "/static/js/main.16de370d.js",
+    "main.css": "/static/css/main.e2f22935.css",
+    "main.js": "/static/js/main.cc6ffa9a.js",
     "static/media/zekeriya_ia.png": "/static/media/zekeriya_ia.06be0d627adc6f787158.png",
     "static/media/fl.MOV": "/static/media/fl.43db42f4329d06c4573f.MOV",
     "static/media/fa-solid-900.svg": "/static/media/fa-solid-900.33f11e8e33e406b0dc21.svg",
@@ -17,6 +17,7 @@
     "static/media/iut.png": "/static/media/iut.c1084f0c925c892208c8.png",
     "static/media/fa-brands-400.eot": "/static/media/fa-brands-400.b09f783b99c88d6989f7.eot",
     "static/media/fa-brands-400.ttf": "/static/media/fa-brands-400.ec7723ea62ad74c14959.ttf",
+    "static/media/trace6.png": "/static/media/trace6.d4c5a02a4b0cf95edd26.png",
     "static/media/GoogleSans-Italic.ttf": "/static/media/GoogleSans-Italic.40bb50bd202405745006.ttf",
     "static/media/GoogleSans-MediumItalic.ttf": "/static/media/GoogleSans-MediumItalic.56d4f777a7997e5a10b3.ttf",
     "static/media/GoogleSans-BoldItalic.ttf": "/static/media/GoogleSans-BoldItalic.d282e9c31d0f894a7f06.ttf",
@@ -24,6 +25,7 @@
     "static/media/GoogleSans-Medium.ttf": "/static/media/GoogleSans-Medium.963c3e555aaada9ef8a9.ttf",
     "static/media/GoogleSans-Bold.ttf": "/static/media/GoogleSans-Bold.d907e4bf3e32637a636e.ttf",
     "static/media/stanford_logo.png": "/static/media/stanford_logo.33fa3b87ec7280dc3612.png",
+    "static/media/logo_sdis25.png": "/static/media/logo_sdis25.fd1abbd59fdc6cbd67e1.png",
     "static/media/hrishi2.png": "/static/media/hrishi2.8b14576393a51386502e.png",
     "static/media/fa-solid-900.woff": "/static/media/fa-solid-900.3ef4f1acb44a2df412bf.woff",
     "static/media/Agustina.woff": "/static/media/Agustina.eb0c59dda4cc308cba96.woff",
@@ -55,11 +57,11 @@
     "static/media/trace2.png": "/static/media/trace2.8d8ce257e8dfe2bba5e4.png",
     "static/media/buld.jpg": "/static/media/buld.55444b9789a64f32e2e5.jpg",
     "index.html": "/index.html",
-    "main.098c1285.css.map": "/static/css/main.098c1285.css.map",
-    "main.16de370d.js.map": "/static/js/main.16de370d.js.map"
+    "main.e2f22935.css.map": "/static/css/main.e2f22935.css.map",
+    "main.cc6ffa9a.js.map": "/static/js/main.cc6ffa9a.js.map"
   },
   "entrypoints": [
-    "static/css/main.098c1285.css",
-    "static/js/main.16de370d.js"
+    "static/css/main.e2f22935.css",
+    "static/js/main.cc6ffa9a.js"
   ]
 }
